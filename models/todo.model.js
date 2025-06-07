@@ -3,22 +3,44 @@ import mongoose from "mongoose";
 
 
 const TodoSchema = new mongoose.Schema({
-    title:{
-        type:String,
-        required:true
+    title: {
+        type: String,
+        required: true,
+        trim: true
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
     },
-    status:{
-        type:String,
-        enum:['pending', 'completed','in-progress']
+    status: {
+        type: String,
+        enum: [ 'pending', 'completed', 'in-progress' ],
+        default: 'pending'
     },
-},{
-    timestamps:true
+    list: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'List',
+        required: true
+    },
+    due_date: {
+        type: Date,
+    },
+    tags: [{
+        type: String,
+        trim: true
+    }],
+    subtasks: [
+       {
+        title: {
+            type: String,
+            required: true
+        },
+       }
+    ]
+}, {
+    timestamps: true
 })
 
- 
-export const Todo  = mongoose.model('Todo', TodoSchema);
+
+export const Todo = mongoose.model('Todo', TodoSchema);
 
 
