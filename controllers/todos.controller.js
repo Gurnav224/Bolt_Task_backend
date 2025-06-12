@@ -31,3 +31,37 @@ export const getAllTodos = async (req, res) => {
         res.status(500).json({error:'failed to fetch todos'})
     }
 }
+
+export const updateTodoStatus = async (req, res) => {
+    // step1; we have get todo id from params and get the status throug req.body
+
+    const todoId = req.params.id;
+    const status = req.body.status;
+    
+    try {
+       const todo = await Todo.findOneAndUpdate({_id:todoId},{status:status},{new:true});
+       
+       res.status(200).json({message:"todo updated successfully", todo})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error:'failed to update the todo'})
+    }
+}
+
+
+export const deleteTodo = async (req, res) => {
+    const {id} = req.params;
+    try {
+        
+        const todo = await Todo.findOneAndDelete(id);
+
+        if(!todo){
+            return res.status(404).json({error:'todo not found'})
+        }
+
+        res.status(200).json({message:'todo delete successfully'})
+
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+}
