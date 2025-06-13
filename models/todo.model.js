@@ -28,6 +28,11 @@ const TodoSchema = new mongoose.Schema({
         type: String,
         trim: true
     }],
+    userId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'users',
+      required:true  
+    },
     subtasks: [
        {
         title: {

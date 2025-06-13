@@ -3,6 +3,7 @@ import initializeDatabase from "./config/databaseConfig.js";
 import dotenv from 'dotenv'
 import listRouter from './routes/list.routes.js';
 import todoRouter from './routes/todo.routes.js';
+import authRouter from './routes/auth.routes.js'
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'our todo server is running successfully' })
 })
 
+app.use('/api/auth', authRouter);
 app.use('/api/lists', listRouter);
 app.use('/api/todos', todoRouter);
 
